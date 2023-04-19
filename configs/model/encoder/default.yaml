@@ -1,0 +1,4 @@
+first_res: 0.4
+point_encoder: [16]
+voxel_encoder: [32, 64, 128, 256, 512, 1024]
+n_pools: 6

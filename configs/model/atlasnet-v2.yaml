@@ -1,0 +1,16 @@
+name: atlas-net-v2
+
+_target_: learnableearthparser.model.AtlasNetV2
+
+transformations:
+  - affine
+  - translation
+callbacks:
+  curriculum:
+    order:
+    - decay_10
+
+S: ${model.K}
+
+defaults:
+  - protos/anv2

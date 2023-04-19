@@ -1,0 +1,8 @@
+n_max: ${data.n_max}
+max_xy: ${data.max_xy}
+max_z: ${data.max_z}
+input_dim: ${data.input_dim}
+n_features: ${data.n_features}
+name: ${data.name}
+class_names: ${data.class_names}
+ignore_index_0: ${data.ignore_index_0}

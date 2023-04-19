@@ -1,0 +1,6 @@
+_target_: learnableearthparser.callbacks.OutHTML
+
+n_val_samples: 4
+samples_per_rows: 4
+
+points_per_scene: 4096

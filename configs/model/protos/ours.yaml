@@ -1,0 +1,8 @@
+name: points
+
+shape:
+  - cube
+
+defaults:
+  - optim/fixed_points
+  - default

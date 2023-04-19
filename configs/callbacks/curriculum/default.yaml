@@ -1,0 +1,22 @@
+_target_: learnableearthparser.callbacks.Curriculum
+
+monitor: Loss/train
+mode: min
+patience: 15
+
+warmup_intensity: .001
+warmup_batch: 1000
+
+decoder_init_mean: ${model.decoder_init_mean}
+decoder_init_std: ${model.decoder_init_std}
+
+log_html_at_activation: True
+save_ckpt_at_activation: True
+
+order:
+  - iso_scale
+  - protos
+  - rotZK
+  - aniso_scaleK
+  - decay_10
+  - decay_10

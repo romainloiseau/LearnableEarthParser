@@ -1,0 +1,3 @@
+[submodule "EarthParserDataset"]
+	path = EarthParserDataset
+	url = git@github.com:romainloiseau/EarthParserDataset.git

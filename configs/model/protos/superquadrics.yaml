@@ -1,0 +1,14 @@
+name: superquadrics
+
+shape:
+  - cube
+
+learn_specific_scale: False
+init_with_fixed_y_rotation: False
+
+init:
+  - [0., 0., 0.]
+
+defaults:
+  - optim/fixed_points
+  - default

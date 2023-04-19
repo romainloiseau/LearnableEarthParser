@@ -1,0 +1,13 @@
+# @package _global_
+
+experiment: windturbine
+
+model:
+  S: 64
+  encoder:
+    first_res: 3.2
+    n_pools: 6
+
+defaults:
+  - /data/windturbine
+  - /model/learnableearthparser

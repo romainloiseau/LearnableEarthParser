@@ -1,0 +1,40 @@
+name: base-model
+
+_target_: learnableearthparser.model.BaseModel
+
+load_weights: ""
+
+distance: ${data.distance} # xyz or xyzrgb or xyzlab or xyzk (k for remissions)
+lambda_xyz_feat: .1
+
+log_every_n_epochs: 25
+log_trace: False
+
+normalization_layer: LayerNorm #BatchNorm1d or LayerNorm --> uses getattr(nn, norm)
+
+decoder_init_mean: 0.
+decoder_init_std: .005
+
+dim_latent: 128
+
+transformations:
+  - iso_scale_L
+  - aniso_scale_LK
+  - rotZ_LK
+  - translation_L
+
+S: 64
+K: 6
+
+defaults:
+  - encoder/default
+  - decoders/default
+  - data/default
+  - protos/ours
+  - /optim/adam
+  - /callbacks/iou/default
+  - /callbacks/outhtml/default
+  - /callbacks/earlystopping/default
+  - /callbacks/curriculum/default
+  - /callbacks/slotcounter/default
+  - /callbacks/protocounter/default

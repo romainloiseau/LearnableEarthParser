@@ -1,0 +1,7 @@
+# @package _global_
+
+data:
+  distance: xyz
+
+defaults:
+  - /model/superquadrics

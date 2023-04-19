@@ -1,0 +1,13 @@
+# @package _global_
+
+experiment: power_plant
+
+model:
+  S: 128
+  encoder:
+    first_res: 0.4
+    n_pools: 6
+    
+defaults:
+  - /data/power_plant
+  - /model/learnableearthparser

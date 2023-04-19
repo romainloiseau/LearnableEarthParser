@@ -1,0 +1,13 @@
+# @package _global_
+
+experiment: forest
+
+model:
+  S: 64
+  encoder:
+    first_res: 0.4
+    n_pools: 6
+    
+defaults:
+  - /data/forest
+  - /model/learnableearthparser

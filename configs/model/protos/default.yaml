@@ -1,0 +1,13 @@
+points: 256
+
+reassign_noise: .01
+
+learn_specific_scale: True
+specific_scale: .1
+noise_specific_scale: 0.
+
+init_with_fixed_y_rotation: True
+init_with_different_y_rotation: False
+
+init:
+  - [0.5, 0., -0.5]

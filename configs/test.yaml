@@ -1,0 +1,25 @@
+hydra: 
+  searchpath:
+      - file://EarthParserDataset/configs
+  run:
+    # Configure output dir of each experiment programmatically from the arguments
+    dir: outputs/tests/${now:%d.%b.%y-%H:%M:%S.%f}
+  job:
+    chdir: True
+
+# Global configurations shared between different modules
+experiment: default
+profile: False
+seed: 4321 # 0 stands for not fixing the seed
+mode: test
+
+test:
+  root: "" # root path of the experiments
+
+# Composing nested config with default
+defaults:
+  - _self_
+  - model/learnableearthparser
+  - trainer/default
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog

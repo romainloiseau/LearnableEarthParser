@@ -1,0 +1,31 @@
+name: ours
+
+_target_: learnableearthparser.model.OursModel
+
+transformations:
+  - scale_aniso_L
+  - rotY_euler_L
+  - rotZ_2d_L
+  - translation_L
+callbacks:
+  curriculum:
+    order:
+    - protosfeat
+    - protosscale
+    - protos
+    - scale_aniso_L
+    - decay_10
+
+epsilon_freq_K: 0.1
+epsilon_freq_L: 0.1
+
+lambda_XP: 1.
+lambda_PX: 1.
+lambda_gamma: 1e-2
+lambda_gamma0: 0.
+lambda_freq_K: 1.
+lambda_freq_L: 1.
+lambda_xytranslate: 100.
+
+defaults:  
+  - base

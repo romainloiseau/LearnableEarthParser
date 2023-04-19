@@ -1,0 +1,4 @@
+decoders: [64, 32]
+
+defaults:
+  - scales/default

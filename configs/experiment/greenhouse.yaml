@@ -1,0 +1,13 @@
+# @package _global_
+
+experiment: greenhouse
+
+model:
+  S: 64
+  encoder:
+    first_res: 0.6
+    n_pools: 6
+
+defaults:
+  - /data/greenhouse
+  - /model/learnableearthparser

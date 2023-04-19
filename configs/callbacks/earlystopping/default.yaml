@@ -1,0 +1,5 @@
+_target_: pytorch_lightning.callbacks.EarlyStopping
+
+monitor: Loss/train
+mode: min
+patience: 50

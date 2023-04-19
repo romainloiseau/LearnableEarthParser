@@ -1,0 +1,13 @@
+# @package _global_
+
+experiment: marina
+
+model:
+  S: 64
+  encoder:
+    first_res: 0.2
+    n_pools: 6
+
+defaults:
+  - /data/marina
+  - /model/learnableearthparser

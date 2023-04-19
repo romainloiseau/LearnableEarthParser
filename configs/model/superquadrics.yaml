@@ -1,0 +1,15 @@
+name: superquadrics
+
+transformations:
+  - superquadrics_L
+  - rotXYZ_quat_L
+  - translation_L
+callbacks:
+  curriculum:
+    order:
+    - decay_10
+
+K: 1
+
+defaults:
+  - protos/sq

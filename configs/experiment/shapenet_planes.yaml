@@ -1,0 +1,41 @@
+# @package _global_
+
+model:
+  log_every_n_epochs: 250
+  epsilon_freq_K: 0.5
+  lambda_gamma: 0
+  K: 6
+  S: 6
+  protos:
+    learn_specific_scale: True
+    init_with_fixed_y_rotation: False
+    init_with_different_y_rotation: True #True
+    noise_specific_scale: 0.1
+    init:
+      - [0.3, 0., -0.3]
+  encoder:
+    first_res: 0.1
+    n_pools: 5
+    voxel_encoder: [32, 64, 128, 256, 512]
+  transformations:
+    - rotY_euler
+    - affine
+    - rotZ_2d
+    - translation
+  callbacks:
+    earlystopping:
+      patience: 300
+    curriculum:
+      patience: 125
+      order:
+      - protos
+      - affine
+      - decay_10
+
+trainer:
+  check_val_every_n_epoch: 100
+
+defaults:
+  - /data: shapenet_planes
+
+experiment: shapenet_planes

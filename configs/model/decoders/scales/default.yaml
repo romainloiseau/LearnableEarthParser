@@ -1,0 +1,5 @@
+scale: .5
+theta_L: .1
+theta_LK: .1
+translation_L: 1.2
+translation_LK: .1
