@@ -53,3 +53,14 @@ python main.py \
 ### Citation   
 
 If you use this method and/or this API in your work, please cite our [paper](https://imagine.enpc.fr/~loiseaur/learnable-earth-parser).
+
+```markdown
+@misc{loiseau2023learnable,
+      title={Learnable Earth Parser: Discovering 3D Prototypes in Aerial Scans}, 
+      author={Romain Loiseau and Elliot Vincent and Mathieu Aubry and Loic Landrieu},
+      year={2023},
+      eprint={2304.09704},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```
