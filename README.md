@@ -50,6 +50,8 @@ python main.py \
     model.load_weights="/path/to/trained/weights.ckpt"
 ```
 
+Pretrained models can be downloaded [here](https://zenodo.org/record/8276586)
+
 ### Citation   
 
 If you use this method and/or this API in your work, please cite our [paper](https://imagine.enpc.fr/~loiseaur/learnable-earth-parser).
