@@ -7,6 +7,8 @@ import learnableearthparser.utils.generate_shape as generate_shape
 import learnableearthparser.utils.rotation as rotation
 
 from ..utils import color as color
+from ..fast_sampler import fast_sample_on_batch
+from ..utils import superquadrics as sq
 
 class Prototypes:
 
@@ -25,8 +27,10 @@ class Prototypes:
             self._protos = nn.Parameter(torch.stack(
                 [proto for proto in self.sample_proto()], dim=0
             ))
-        elif self.hparams.protos.name == "superquadrics":
+        elif self.hparams.protos.name in ["superquadrics", "cube_diff"]:
             pass
+        elif self.hparams.protos.name == "superquadrics_diff":
+            self._protos = nn.Parameter(torch.zeros((self.hparams.K, 2)))
         else:
             raise ValueError
 
@@ -69,7 +73,39 @@ class Prototypes:
     def get_protos(self, points=None):
         if self.hparams.protos.name == "points":
             return torch.matmul(self._protos * self.get_protosscale(), self._protosrotation)
+        elif self.hparams.protos.name == "cube_diff":
+            if self.training:
+                _protos = 2. * torch.rand((self.hparams.K, self.hparams.protos.points, 3), device=self.device) - 1.
+            else:
+                _protos = torch.stack(torch.meshgrid((torch.linspace(-1, 1, 6, device=self.device), torch.linspace(-1, 1, 6, device=self.device), torch.linspace(-1, 1, 6, device=self.device)))).flatten(1, 3).T.unsqueeze(0).repeat(self.hparams.K, 1, 1)
+            return torch.matmul(_protos * self.get_protosscale(), self._protosrotation)
         elif self.hparams.protos.name == "superquadrics":
             return self.get_protosscale()
+        elif self.hparams.protos.name == "superquadrics_diff":
+            epsilons = torch.sigmoid(self._protos)*1.1 + 0.4
+
+            scales = self.get_protosscale()[:, 0]
+
+            if self.training:
+                etas, omegas = fast_sample_on_batch(scales.unsqueeze(0).detach().cpu().numpy(), epsilons.unsqueeze(0).detach().cpu().numpy(), self.hparams.protos.points)
+                etas, omegas = etas[0], omegas[0]
+            else:
+                from ..utils.icosphere import generate_icosphere
+                v, faces = generate_icosphere(2)
+
+                etas, omegas = torch.asin(v[:, 2] / torch.norm(v, dim=1)), torch.atan2(v[:, 1], v[:, 0])
+                etas, omegas = etas.view(1, -1).repeat(self.hparams.K, 1).numpy(), omegas.view(1, -1).repeat(self.hparams.K, 1).numpy()
+
+            # Make sure we don't get nan for gradients
+            etas[etas == 0] += 1e-6
+            omegas[omegas == 0] += 1e-6
+
+            # Move to tensors
+            etas = scales.new_tensor(etas)
+            omegas = scales.new_tensor(omegas)
+
+            protos = sq.get_superquadrics_diff(epsilons, scales, etas, omegas)
+
+            return protos
         else:
             raise ValueError

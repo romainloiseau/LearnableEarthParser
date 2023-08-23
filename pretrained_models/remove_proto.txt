@@ -1,0 +1,7 @@
+crop_field: [4, 2, 5]
+forest: [6, 2]
+marina: [3, 5, 1]
+greenhouse: [1]
+power_plant: [6, 5]
+urban: [5]
+windturbine: [4]

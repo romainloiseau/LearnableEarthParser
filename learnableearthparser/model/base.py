@@ -126,7 +126,7 @@ class BaseModel(pl.LightningModule, LoggingModel, Decoders, Prototypes):
             decoder: PD.LinearDecoder(
                 dim_in=self.hparams.dim_latent,
                 decoder=self.hparams.decoders.decoders,
-                dim_out=self.DECODERS_N_PARAMS[decoder] * (self.hparams.K if decoder.split("_")[-1] == "SK" else 1),
+                dim_out=self.DECODERS_N_PARAMS[decoder] * (self.hparams.K if decoder.split("_")[-1] == "LK" else 1),
                 norm=self.hparams.normalization_layer,
                 end_with_bias=True
             ) for decoder in self.hparams.transformations
@@ -287,17 +287,25 @@ class BaseModel(pl.LightningModule, LoggingModel, Decoders, Prototypes):
 
             out["chamfer"] = .5 * (cham_x.sum(-1) / batch.pos_lenght + (mask * cham_y).sum(-1) / mask.sum(-1))
 
+
+            ppoints = self.hparams.protos.points
+            if self.hparams.protos.name == "cube_diff":
+                ppoints = 6*6*6
+            if self.hparams.protos.name == "superquadrics_diff":
+                ppoints = 162
+
             if tag == "test" and hasattr(self, "_protosfeat"):
                 assert y.size(0) == 1
 
                 choice = out["choice"][0][out["choice"][0] != -1]
                 feat = self.get_protosfeat().squeeze()[choice]
-                feat = feat.unsqueeze(0).unsqueeze(-1).repeat_interleave(self.hparams.protos.points, 1)
+                feat = feat.unsqueeze(0).unsqueeze(-1).repeat_interleave(ppoints, 1)
+
                 cham_x, cham_y, idx, _ = chamfer_distance(batch.pos_padded*self.lambda_xyz_feat / self.lambda_xyz_feat[0], torch.cat([y, feat], -1)*self.lambda_xyz_feat / self.lambda_xyz_feat[0], batch.pos_lenght, y_lengths)
 
                 out["chamfer4D"] = .5 * (cham_x.sum(-1) / batch.pos_lenght + (mask * cham_y).sum(-1) / mask.sum(-1))
 
-            inst_pred_padded = torch.div(idx, self.hparams.protos.points).long()  
+            inst_pred_padded = torch.div(idx, ppoints).long()  
 
             for item in range(batch_size):
                 with torch.no_grad():
@@ -306,7 +314,7 @@ class BaseModel(pl.LightningModule, LoggingModel, Decoders, Prototypes):
                     choice_item = choice_item[choice_item != -1]
 
                     if tag == "test":
-                        choice_item = torch.arange(self.hparams.protos.points, device=choice_item.device).unsqueeze(-1) + self.hparams.protos.points * choice_item.unsqueeze(0)
+                        choice_item = torch.arange(ppoints, device=choice_item.device).unsqueeze(-1) + ppoints * choice_item.unsqueeze(0)
                         y_pred.append(choice_item.T.flatten()[idx[item, :batch.pos_lenght[item]]])
                     else:
                         y_pred.append(choice_item[inst_pred[-1]])
@@ -393,9 +401,9 @@ class BaseModel(pl.LightningModule, LoggingModel, Decoders, Prototypes):
             {"params": self.encoder.parameters(), "name": "encoder"}            
         ]
         
-        if hasattr(self, "_protos"):
+        if hasattr(self, "_protos") and self.hparams.protos.name not in ["cube_diff"]:
             parameters.append({
-                "params": self._protos if self.hparams.protos.name == "points" else self._protos.parameters(), "name": "protos",
+                "params": self._protos if self.hparams.protos.name in ["points", "superquadrics_diff"] else self._protos.parameters(), "name": "protos",
                 'weight_decay': self.hparams.protos.optim.weight_decay,
                 'lr': self.hparams.protos.optim.lr,
                 'eps': self.hparams.protos.optim.eps

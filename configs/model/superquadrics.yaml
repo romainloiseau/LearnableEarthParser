@@ -12,4 +12,4 @@ callbacks:
 K: 1
 
 defaults:
-  - protos/sq
+  - protos/superquadrics

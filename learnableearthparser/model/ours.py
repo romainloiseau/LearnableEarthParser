@@ -74,7 +74,7 @@ class OursModel(BaseModel):
         )
         self.register_buffer("normalize_proba", 1. / torch.tensor(self.hparams.decoders.decoders[-1])**.5, persistent=False)
 
-        if self.hparams.name == "superquadrics":
+        if "superquadrics" in self.hparams.name:
             self.SUPERQUADRIC_MODE = "train"
 
     def compute_logits(self, scene_features):

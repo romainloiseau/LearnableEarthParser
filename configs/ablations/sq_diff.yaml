@@ -1,4 +1,4 @@
 # @package _global_
 
 defaults:
-  - /model/atlasnet-v2
+  - /model/sq_diff

@@ -1,0 +1,5 @@
+name: superquadrics_diff
+
+defaults:
+  - optim/fixed_points
+  - default

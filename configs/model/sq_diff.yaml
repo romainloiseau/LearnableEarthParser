@@ -1,0 +1,18 @@
+name: superquadrics_diff
+
+transformations:
+  - scale_aniso_L
+  - rotY_euler_L
+  - rotZ_2d_L
+  - translation_L
+callbacks:
+  curriculum:
+    order:
+    - protosfeat
+    - protosscale
+    - protos
+    - scale_aniso_L
+    - decay_10
+
+defaults:
+  - protos/superquadrics_diff

@@ -41,6 +41,17 @@ class IoU(DTICallback):
 
         key = "train" if "train" in confmat.keys() else ("test" if "test" in confmat.keys() else "val")
 
+        if key == "test":
+            ### COMPUTING ENTROPY
+            sumdistrib = confmat[key].sum(0)
+            sumdistribisnozero = sumdistrib != 0
+            distrib = confmat[key] / sumdistrib
+            H = np.nan_to_num(distrib * np.log(distrib), nan=0.0)
+            H = - H.sum(0) / np.log(distrib.shape[0])
+            print(H.shape)
+            print(H)
+            print(H.min(), H.mean(), H.max())
+
         if self.ignore_index_0:
             self.best_assign = 1 + np.argmax(confmat[key][1:], axis=0)
         else:

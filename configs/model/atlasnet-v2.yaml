@@ -3,8 +3,8 @@ name: atlas-net-v2
 _target_: learnableearthparser.model.AtlasNetV2
 
 transformations:
-  - affine
-  - translation
+  - affine_L
+  - translation_L
 callbacks:
   curriculum:
     order:
@@ -13,4 +13,4 @@ callbacks:
 S: ${model.K}
 
 defaults:
-  - protos/anv2
+  - protos/atlasnet-v2

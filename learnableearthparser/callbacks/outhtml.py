@@ -293,7 +293,7 @@ class OutHTML(DTICallback):
                 row=1 + n//n_cols, col=1 + n % n_cols
             )
 
-            color = np.concatenate([pl_module.hparams.protos.points*[c.item()] for c in out["choice"].flatten() if c != -1])
+            color = np.concatenate([int(out["recs"][0].size(0) / (out["choice"].flatten() != -1).sum())*[c.item()] for c in out["choice"].flatten() if c != -1])
             
             out_recs = out["recs"][0].detach().cpu().numpy()
 
