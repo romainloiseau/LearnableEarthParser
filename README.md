@@ -6,7 +6,7 @@
 </div>
  
 ## Description   
-Pytorch implementation of the paper "Learnable Earth Parser: Discovering 3D Prototypes in Aerial Scans"
+Pytorch implementation of the paper [Learnable Earth Parser: Discovering 3D Prototypes in Aerial Scans, Romain Loiseau, Elliot Vincent, Mathieu Aubry, Loic Landrieu, CVPR 2024](https://romainloiseau.fr/learnable-earth-parser/)
 
 ![learnable earth parser](media/learnableearthparser.png)
 
@@ -57,12 +57,14 @@ Pretrained models can be downloaded [here](https://zenodo.org/record/8276586)
 If you use this method and/or this API in your work, please cite our [paper](https://imagine.enpc.fr/~loiseaur/learnable-earth-parser).
 
 ```markdown
-@misc{loiseau2023learnable,
+@article{loiseau2024learnable,
       title={Learnable Earth Parser: Discovering 3D Prototypes in Aerial Scans}, 
       author={Romain Loiseau and Elliot Vincent and Mathieu Aubry and Loic Landrieu},
-      year={2023},
-      eprint={2304.09704},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+      journal={CVPR},
+      year={2024}
 }
 ```
+
+### Acknowledgements
+
+This work was supported in part by **ANR project READY3D ANR-19-CE23-0007**, ANR under the France 2030 program under the reference **ANR-23-PEIA-0008**, and was granted access to the **HPC resources of IDRIS** under the allocation 2022-AD011012096R2 made by GENCI. The work of MA was partly supported by the **European Research Council (ERC project DISCOVER, number 101076028)**. The scenes of Earth Parser Dataset were acquired and annotated by the **[LiDAR-HD](https://geoservices.ign.fr/lidarhd)** project. We thank **Zenodo** for hosting the dataset. We thank Zeynep Sonat Baltaci, Emile Blettery, Nicolas Dufour, Antoine Guedon, Helen Mair Rawsthorne, Tom Monnier, Damien Robert, Mathis Petrovich and Yannis Siglidis for inspiring discussions and valuable feedback.
