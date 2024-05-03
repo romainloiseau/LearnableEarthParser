@@ -19,7 +19,10 @@ conda env create -f environment.yml
 conda activate learnableearthparser
 ```
 
-Install the fast superquadrics sampler from [https://github.com/paschalidoud/superquadric_parsing](https://github.com/paschalidoud/superquadric_parsing).
+Install the fast superquadrics sampler from the ```learnableearthparser/fast_sampler``` subfolder by executing the command :
+```
+python setup.py build_ext --inplace
+```
 
 **Optional:** some monitoring routines are implemented with `tensorboard`.
 
